@@ -600,10 +600,11 @@ footer{ text-align:center; color:var(--ink-soft); font-size:13.5px; margin-top:4
   font-size:15px; font-weight:700; color:var(--ink); line-height:1.65;
 }
 .anno .icon{ margin-top:3px; color:var(--teal-dark); }
-.verb-mark{
-  background:#FFEAD8; color:var(--ink);
-  border-radius:6px; padding:0 4px; font-weight:700;
-  box-shadow: inset 0 -2px 0 rgba(233,111,73,0.55);
+/* 範文中「用動作寫心情」的示範段落：整段標記（對應講義文件裡標紅的範圍），
+   用螢光筆式的底色，長段落讀起來才不會有壓迫感。 */
+.verb-span{
+  background: linear-gradient(transparent 58%, #FFDCC9 58%);
+  padding: 0 1px;
 }
 
 /* ---------- 題目自動帶入提示 ---------- */
@@ -1067,7 +1068,7 @@ footer{ text-align:center; color:var(--ink-soft); font-size:13.5px; margin-top:4
         </div>
         <div class="tab-panel essay active" id="essay-plain"><div class="essay-title">這一次，我當配角</div><p>有些光，必須站在陰影裡，才能被看見。</p><p>世人眼裡的聚光燈，往往只追隨舞臺中央的主角。然而，生命的劇本並非永遠由單一的榮耀構成。對我而言，從「渴望發光」到「甘於照亮」的轉折，是生命中一段必須親身走過的修煉。</p><p>「主角」這個標籤，曾像盔甲般披在我身上。比如在英語話劇比賽中，我扛下男主角的重任，臺詞最厚、戲份最重，那種被目光包圍的感覺，帶給我無與倫比的光榮感。然而，榮耀的另一面，亦是近乎窒息的壓力。隨著演出日期逼近，我常感到肩膀不自覺的聳起，指尖緊捏著幾乎快翻破的劇本，指甲在紙緣壓出一道道白痕。即便雙腿不由自主的顫抖，我仍反覆調整呼吸，並悄悄的抹去掌心的冷汗，試圖平復那幾乎要撞破胸膛的心跳。那時的我深信，唯有站在舞臺中央，生命才算有價值。</p><p>直到班際籃球賽，現實對我開了一個玩笑。看著隊友在場上奔馳、對抗、施展戰術，我卻只能站在場邊遞水、遞毛巾。起初，那股落寞感如潮水般襲來。我靜靜佇立在球場邊線外，肩膀下垂，指尖焦慮的摳著水瓶標籤，指甲在掌心按壓出深深的紅印。縱使內心翻騰，我也只能抿著雙脣，將視線鎖定在場上，並且任由那股酸澀感在鼻尖悄然竄動。那一刻，是我第一次清楚體會到，原來當個配角，竟有如此巨大的邊緣感。</p><p>隨著籃球賽進入拉鋸戰，緊張的氛圍頓時將我拉回比賽之中。我拚命拍打地板，將手中的毛巾一次次遞上，並大聲複述教練的提醒。雖然雙腳始終未曾踏進場內，但我的心卻隨著比賽節奏一同起伏。終場哨聲響起，全班相擁而泣，一位隊友走過來，拍了拍我的肩膀，對我說：「謝謝你，要不是你在場邊一直喊，最後那一球，我可能撐不下去！」那一瞬間，原先盤踞心頭的落寞煙消雲散，取而代之的，是一種被需要、被肯定的踏實感。</p><p>回望那兩個時刻，一個站在燈光最亮之處，一個停在邊線之外。主角讓我學會承擔與勇敢，配角則讓我明白：即使不被注視，也能成為支撐的一部分。或許，生命從來不只是一道光，而是一明一暗之間的流轉。「這一次，我當配角」，當我不再急著走進中央，而願意在光影交界處站穩腳步時，才發現——有些位置，雖不耀眼，卻是無可取代！</p></div>
         <div class="tab-panel essay" id="essay-structure"><div class="essay-title">這一次，我當配角</div><div class="anno"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-bulb"></use></svg><span>第一段・破題：引出主角與配角的價值反思</span></div><p>有些光，必須站在陰影裡，才能被看見。</p><p>世人眼裡的聚光燈，往往只追隨舞臺中央的主角。然而，生命的劇本並非永遠由單一的榮耀構成。對我而言，從「渴望發光」到「甘於照亮」的轉折，是生命中一段必須親身走過的修煉。</p><div class="anno"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-bulb"></use></svg><span>第二段・對比 A：描述擔任「主角」時的光榮與壓力</span></div><p>「主角」這個標籤，曾像盔甲般披在我身上。比如在英語話劇比賽中，我扛下男主角的重任，臺詞最厚、戲份最重，那種被目光包圍的感覺，帶給我無與倫比的光榮感。然而，榮耀的另一面，亦是近乎窒息的壓力。隨著演出日期逼近，我常感到肩膀不自覺的聳起，指尖緊捏著幾乎快翻破的劇本，指甲在紙緣壓出一道道白痕。即便雙腿不由自主的顫抖，我仍反覆調整呼吸，並悄悄的抹去掌心的冷汗，試圖平復那幾乎要撞破胸膛的心跳。那時的我深信，唯有站在舞臺中央，生命才算有價值。</p><div class="anno"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-bulb"></use></svg><span>第三段・對比 B：描述擔任「配角」時的落寞，以及後來的貢獻</span></div><p>直到班際籃球賽，現實對我開了一個玩笑。看著隊友在場上奔馳、對抗、施展戰術，我卻只能站在場邊遞水、遞毛巾。起初，那股落寞感如潮水般襲來。我靜靜佇立在球場邊線外，肩膀下垂，指尖焦慮的摳著水瓶標籤，指甲在掌心按壓出深深的紅印。縱使內心翻騰，我也只能抿著雙脣，將視線鎖定在場上，並且任由那股酸澀感在鼻尖悄然竄動。那一刻，是我第一次清楚體會到，原來當個配角，竟有如此巨大的邊緣感。</p><p>隨著籃球賽進入拉鋸戰，緊張的氛圍頓時將我拉回比賽之中。我拚命拍打地板，將手中的毛巾一次次遞上，並大聲複述教練的提醒。雖然雙腳始終未曾踏進場內，但我的心卻隨著比賽節奏一同起伏。終場哨聲響起，全班相擁而泣，一位隊友走過來，拍了拍我的肩膀，對我說：「謝謝你，要不是你在場邊一直喊，最後那一球，我可能撐不下去！」那一瞬間，原先盤踞心頭的落寞煙消雲散，取而代之的，是一種被需要、被肯定的踏實感。</p><div class="anno"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-bulb"></use></svg><span>第四段・體悟（A＋B）：主角是榮耀，配角是氣度</span></div><p>回望那兩個時刻，一個站在燈光最亮之處，一個停在邊線之外。主角讓我學會承擔與勇敢，配角則讓我明白：即使不被注視，也能成為支撐的一部分。或許，生命從來不只是一道光，而是一明一暗之間的流轉。「這一次，我當配角」，當我不再急著走進中央，而願意在光影交界處站穩腳步時，才發現——有些位置，雖不耀眼，卻是無可取代！</p></div>
-        <div class="tab-panel essay" id="essay-verb"><div class="essay-title">這一次，我當配角</div><p>有些光，必須站在陰影裡，才能被看見。</p><p>世人眼裡的聚光燈，往往只追隨舞臺中央的主角。然而，生命的劇本並非永遠由單一的榮耀構成。對我而言，從「渴望發光」到「甘於照亮」的轉折，是生命中一段必須親身走過的修煉。</p><div class="anno"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-bulb"></use></svg><span>用動作（大動作、小動作 → 內在反應）寫出「緊張」的心情</span></div><p>「主角」這個標籤，曾像盔甲般披在我身上。比如在英語話劇比賽中，我扛下男主角的重任，臺詞最厚、戲份最重，那種被目光包圍的感覺，帶給我無與倫比的光榮感。然而，榮耀的另一面，亦是近乎窒息的壓力。隨著演出日期逼近，我常感到肩膀不自覺的<span class="verb-mark">聳起</span>，指尖緊<span class="verb-mark">捏</span>著幾乎快翻破的劇本，指甲在紙緣<span class="verb-mark">壓出</span>一道道白痕。即便雙腿不由自主的<span class="verb-mark">顫抖</span>，我仍反覆調整<span class="verb-mark">呼吸</span>，並悄悄的<span class="verb-mark">抹</span>去掌心的冷汗，試圖平復那幾乎要<span class="verb-mark">撞破</span>胸膛的心跳。那時的我深信，唯有站在舞臺中央，生命才算有價值。</p><div class="anno"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-bulb"></use></svg><span>用動作（大動作、小動作 → 內在反應）寫出「落寞」的心情</span></div><p>直到班際籃球賽，現實對我開了一個玩笑。看著隊友在場上奔馳、對抗、施展戰術，我卻只能站在場邊遞水、遞毛巾。起初，那股落寞感如潮水般襲來。我靜靜<span class="verb-mark">佇立</span>在球場邊線外，肩膀<span class="verb-mark">下垂</span>，指尖焦慮的<span class="verb-mark">摳</span>著水瓶標籤，指甲在掌心<span class="verb-mark">按壓</span>出深深的紅印。縱使內心翻騰，我也只能<span class="verb-mark">抿</span>著雙脣，將視線<span class="verb-mark">鎖定</span>在場上，並且任由那股酸澀感在鼻尖悄然<span class="verb-mark">竄動</span>。那一刻，是我第一次清楚體會到，原來當個配角，竟有如此巨大的邊緣感。</p><div class="anno"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-bulb"></use></svg><span>用動作（大動作、小動作 → 內在反應）寫出「激昂」的心情</span></div><p>隨著籃球賽進入拉鋸戰，緊張的氛圍頓時將我拉回比賽之中。我拚命<span class="verb-mark">拍打</span>地板，將手中的毛巾一次次<span class="verb-mark">遞上</span>，並大聲<span class="verb-mark">複述</span>教練的提醒。雖然雙腳始終未曾踏進場內，但我的心卻隨著比賽節奏一同<span class="verb-mark">起伏</span>。終場哨聲響起，全班相擁而泣，一位隊友走過來，拍了拍我的肩膀，對我說：「謝謝你，要不是你在場邊一直喊，最後那一球，我可能撐不下去！」那一瞬間，原先盤踞心頭的落寞煙消雲散，取而代之的，是一種被需要、被肯定的踏實感。</p><p>回望那兩個時刻，一個站在燈光最亮之處，一個停在邊線之外。主角讓我學會承擔與勇敢，配角則讓我明白：即使不被注視，也能成為支撐的一部分。或許，生命從來不只是一道光，而是一明一暗之間的流轉。「這一次，我當配角」，當我不再急著走進中央，而願意在光影交界處站穩腳步時，才發現——有些位置，雖不耀眼，卻是無可取代！</p></div>
+        <div class="tab-panel essay" id="essay-verb"><div class="essay-title">這一次，我當配角</div><p>有些光，必須站在陰影裡，才能被看見。</p><p>世人眼裡的聚光燈，往往只追隨舞臺中央的主角。然而，生命的劇本並非永遠由單一的榮耀構成。對我而言，從「渴望發光」到「甘於照亮」的轉折，是生命中一段必須親身走過的修煉。</p><div class="anno"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-bulb"></use></svg><span>用動作（大動作、小動作 → 內在反應）寫出「緊張」的心情</span></div><p>「主角」這個標籤，曾像盔甲般披在我身上。比如在英語話劇比賽中，我扛下男主角的重任，臺詞最厚、戲份最重，那種被目光包圍的感覺，帶給我無與倫比的光榮感。然而，榮耀的另一面，亦是近乎窒息的壓力。隨著演出日期逼近，<span class="verb-span">我常感到肩膀不自覺的聳起，指尖緊捏著幾乎快翻破的劇本，指甲在紙緣壓出一道道白痕。即便雙腿不由自主的顫抖，我仍反覆調整呼吸，並悄悄的抹去掌心的冷汗，試圖平復那幾乎要撞破胸膛的心跳。</span>那時的我深信，唯有站在舞臺中央，生命才算有價值。</p><div class="anno"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-bulb"></use></svg><span>用動作（大動作、小動作 → 內在反應）寫出「落寞」的心情</span></div><p>直到班際籃球賽，現實對我開了一個玩笑。看著隊友在場上奔馳、對抗、施展戰術，我卻只能站在場邊遞水、遞毛巾。起初，那股落寞感如潮水般襲來。<span class="verb-span">我靜靜佇立在球場邊線外，肩膀下垂，指尖焦慮的摳著水瓶標籤，指甲在掌心按壓出深深的紅印。縱使內心翻騰，我也只能抿著雙脣，將視線鎖定在場上，並且任由那股酸澀感在鼻尖悄然竄動。</span>那一刻，是我第一次清楚體會到，原來當個配角，竟有如此巨大的邊緣感。</p><div class="anno"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-bulb"></use></svg><span>用動作（大動作、小動作 → 內在反應）寫出「激昂」的心情</span></div><p>隨著籃球賽進入拉鋸戰，緊張的氛圍頓時將我拉回比賽之中。<span class="verb-span">我拚命拍打地板，將手中的毛巾一次次遞上，並大聲複述教練的提醒。雖然雙腳始終未曾踏進場內，但我的心卻隨著比賽節奏一同起伏。</span>終場哨聲響起，全班相擁而泣，一位隊友走過來，拍了拍我的肩膀，對我說：「謝謝你，要不是你在場邊一直喊，最後那一球，我可能撐不下去！」那一瞬間，原先盤踞心頭的落寞煙消雲散，取而代之的，是一種被需要、被肯定的踏實感。</p><p>回望那兩個時刻，一個站在燈光最亮之處，一個停在邊線之外。主角讓我學會承擔與勇敢，配角則讓我明白：即使不被注視，也能成為支撐的一部分。或許，生命從來不只是一道光，而是一明一暗之間的流轉。「這一次，我當配角」，當我不再急著走進中央，而願意在光影交界處站穩腳步時，才發現——有些位置，雖不耀眼，卻是無可取代！</p></div>
       </div>
       </div>
     </div>
@@ -1156,6 +1157,9 @@ function showStep(id){
     setExpandBtnState(p.querySelector('.expand-btn'), false);
   });
   document.body.style.overflow = '';
+
+  // 離開某個步驟時，停止該步驟的影片，避免聲音在背景繼續播
+  updateVideoPlayback(id);
 
   // 進入步驟五時，把前面三個小練習的內容整理到左側對照區
   if(id === 'sec5') renderReview();
@@ -1460,6 +1464,46 @@ function mountVideos(){
   });
 }
 mountVideos();
+
+
+// ---- 離開影片所在的畫面時，停止播放 ----------------------------------------
+// Drive 播放器是跨來源的 iframe，沒辦法直接呼叫 pause()，
+// 所以改成把 iframe 先「收起來」（src 換成空白頁），回到該步驟時再接回去。
+// 效果等於停止播放：聲音不會在背景繼續，回來時播放器重新從頭開始。
+function parkVideo(iframe){
+  if(!iframe || iframe.getAttribute('src') === 'about:blank') return;
+  iframe.dataset.src = iframe.getAttribute('src');
+  iframe.setAttribute('src', 'about:blank');
+}
+function resumeVideo(iframe){
+  if(!iframe || !iframe.dataset.src) return;
+  if(iframe.getAttribute('src') !== 'about:blank') return;
+  iframe.setAttribute('src', iframe.dataset.src);
+}
+function updateVideoPlayback(activeId){
+  document.querySelectorAll('.video-card[data-video]').forEach(function(card){
+    const iframe = card.querySelector('.video-frame iframe');
+    if(!iframe) return;
+    const sec = card.closest('.node-section');
+    const isActive = sec && sec.id === activeId;
+    if(isActive) resumeVideo(iframe); else parkVideo(iframe);
+  });
+}
+// 一開始只讓「目前這一步」的影片是載入狀態，其餘先收起來
+(function(){
+  const active = document.querySelector('.node-section.active');
+  updateVideoPlayback(active ? active.id : '');
+})();
+
+// 切到其他瀏覽器分頁或把視窗縮到背景時，也一併停止播放
+document.addEventListener('visibilitychange', function(){
+  if(document.hidden){
+    document.querySelectorAll('.video-card[data-video] .video-frame iframe').forEach(parkVideo);
+  } else {
+    const active = document.querySelector('.node-section.active');
+    updateVideoPlayback(active ? active.id : '');
+  }
+});
 
 // ---- 窄螢幕提示：固定於頂部時，將頁面內容與步驟導覽列往下推開，避免被擋住 ----
 function layoutForWarning(){

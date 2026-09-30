@@ -503,7 +503,7 @@ footer{ text-align:center; color:var(--ink-soft); font-size:13.5px; margin-top:4
   .pane-label-row{ position:sticky; top:0; z-index:2; }
   .practice-pane .practice-card,
   .practice-pane .writing-card{ flex: 1 0 auto; display:flex; flex-direction:column; }
-  .practice-pane .practice-card .btn{ margin-top:auto; align-self:flex-start; }
+  .practice-pane .practice-card .action-row{ margin-top:auto; }
   .practice-pane .writing-card textarea{ flex:1 1 auto; }
 }
 
@@ -540,6 +540,63 @@ footer{ text-align:center; color:var(--ink-soft); font-size:13.5px; margin-top:4
 }
 .device-warning button:hover{ opacity:0.88; }
 .device-warning.dismissed{ display:none !important; }
+
+/* ---------- AI 回饋 ---------- */
+.action-row{
+  display:flex; flex-wrap:wrap; align-items:center; gap:12px;
+  margin-top: 4px;
+}
+.btn.ai{
+  background: var(--lavender);
+  box-shadow: 0 6px 16px rgba(142,143,224,0.38);
+}
+.btn.ai:disabled{ opacity:.45; cursor:not-allowed; pointer-events:none; box-shadow:none; }
+.ai-quota{
+  font-size:13.5px; font-weight:700; color:var(--ink-soft);
+  display:inline-flex; align-items:center; gap:6px;
+}
+.ai-quota.used-up{ color:#A8B4BE; }
+
+.ai-feedback{
+  margin-top:16px; padding:16px 18px;
+  background:#F5F5FD; border:2px solid #DEDEF8;
+  border-radius: var(--radius-md);
+}
+.ai-fb-head{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  flex-wrap:wrap; margin-bottom:10px;
+}
+.ai-fb-title{
+  display:flex; align-items:center; gap:8px;
+  font-family:'Baloo 2','Noto Sans TC',sans-serif;
+  font-weight:700; font-size:16.5px; color:#5B5CC4;
+}
+.ai-round{
+  font-size:13px; font-weight:700; color:#6E6FD0;
+  background:#E7E7FA; border-radius:999px; padding:3px 12px;
+}
+.ai-sec{ margin-top:12px; }
+.ai-sec .ai-sec-t{
+  display:flex; align-items:center; gap:6px;
+  font-size:14.5px; font-weight:700; color:#5B5CC4; margin-bottom:4px;
+}
+.ai-feedback ul{ margin:0; padding-left:20px; }
+.ai-feedback li{ font-size:15.5px; line-height:1.75; margin-bottom:4px; }
+.ai-next{
+  margin-top:14px; padding:10px 14px;
+  background:#fff; border-radius:14px;
+  font-size:14px; font-weight:700; color:var(--ink);
+  display:flex; align-items:center; gap:8px; line-height:1.6;
+}
+.ai-disclaimer{ margin-top:10px; font-size:12.5px; color:var(--ink-soft); line-height:1.6; }
+.ai-dots{ display:inline-flex; gap:3px; }
+.ai-dots i{
+  width:5px; height:5px; border-radius:50%; background:#fff; display:block;
+  animation: aiBlink 1s infinite ease-in-out;
+}
+.ai-dots i:nth-child(2){ animation-delay:.15s; }
+.ai-dots i:nth-child(3){ animation-delay:.3s; }
+@keyframes aiBlink{ 0%,80%,100%{ opacity:.25; } 40%{ opacity:1; } }
 
 /* ---------- 完成寫作後的提示與完成卡 ---------- */
 .done-note{
@@ -681,6 +738,8 @@ footer{ text-align:center; color:var(--ink-soft); font-size:13.5px; margin-top:4
 <symbol id="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></symbol>
 <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.2" y2="16.2"></line></symbol>
 <symbol id="icon-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></symbol>
+<symbol id="icon-sparkle" viewBox="0 0 24 24"><path d="M11.5 3l1.9 4.4 4.4 1.9-4.4 1.9-1.9 4.4-1.9-4.4L5.2 9.3l4.4-1.9L11.5 3z"></path><path d="M18 15l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8L18 15z"></path></symbol>
+<symbol id="icon-refresh" viewBox="0 0 24 24"><polyline points="21 4 21 10 15 10"></polyline><path d="M20.4 14a8.5 8.5 0 1 1-2-8.4L21 8"></path></symbol>
 <symbol id="icon-play" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"></polygon></symbol>
 </defs>
 </svg>
@@ -838,7 +897,12 @@ footer{ text-align:center; color:var(--ink-soft); font-size:13.5px; margin-top:4
       <textarea class="answer-box" id="p1-topic" placeholder="寫下你想到的事件……"></textarea>
       <label class="field-label">3. 心境轉折（情感或想法發生質變）</label>
       <textarea class="answer-box" id="p1-turn" placeholder="說說你的心情怎麼轉變……"></textarea>
-      <button class="btn" onclick="savePractice(this,'小練習（一）')">儲存我的練習</button>
+      <div class="action-row">
+        <button class="btn" onclick="savePractice(this,'小練習（一）')">儲存我的練習</button>
+        <button class="btn ai" id="aiBtn-p1" onclick="askAI('p1')"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-sparkle"></use></svg> <span class="ai-btn-label">請 AI 給我建議</span></button>
+        <span class="ai-quota" id="aiQuota-p1">還可以請 AI 看 2 次</span>
+      </div>
+      <div class="ai-feedback" id="aiFb-p1" hidden></div>
     </div>
       </div>
     </div>
@@ -930,7 +994,12 @@ footer{ text-align:center; color:var(--ink-soft); font-size:13.5px; margin-top:4
       <textarea class="answer-box" id="p2-s3"></textarea>
       <label class="field-label">第四段（體悟 A＋B）</label>
       <textarea class="answer-box" id="p2-s4"></textarea>
-      <button class="btn" onclick="savePractice(this,'小練習（二）')">儲存我的練習</button>
+      <div class="action-row">
+        <button class="btn" onclick="savePractice(this,'小練習（二）')">儲存我的練習</button>
+        <button class="btn ai" id="aiBtn-p2" onclick="askAI('p2')"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-sparkle"></use></svg> <span class="ai-btn-label">請 AI 給我建議</span></button>
+        <span class="ai-quota" id="aiQuota-p2">還可以請 AI 看 2 次</span>
+      </div>
+      <div class="ai-feedback" id="aiFb-p2" hidden></div>
     </div>
       </div>
     </div>
@@ -1019,7 +1088,12 @@ footer{ text-align:center; color:var(--ink-soft); font-size:13.5px; margin-top:4
       <textarea class="answer-box" id="p3-verbs" placeholder="臉部：　　　　　手：　　　　　腳：　　　　　身體：" style="min-height:60px;"></textarea>
       <label class="field-label">3. 串起動作（完整句子）</label>
       <textarea class="answer-box" id="p3-sentence" placeholder="把上面的動詞串成一段有畫面感的文字……"></textarea>
-      <button class="btn" onclick="savePractice(this,'小練習（三）')">儲存我的練習</button>
+      <div class="action-row">
+        <button class="btn" onclick="savePractice(this,'小練習（三）')">儲存我的練習</button>
+        <button class="btn ai" id="aiBtn-p3" onclick="askAI('p3')"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-sparkle"></use></svg> <span class="ai-btn-label">請 AI 給我建議</span></button>
+        <span class="ai-quota" id="aiQuota-p3">還可以請 AI 看 2 次</span>
+      </div>
+      <div class="ai-feedback" id="aiFb-p3" hidden></div>
     </div>
       </div>
     </div>
@@ -1403,6 +1477,217 @@ function renderReview(){
 }
 
 
+
+// ---- 小練習的 AI 回饋 --------------------------------------------------------
+// 每個小練習最多兩次。流程：學生作答 → 請 AI 看 → 讀建議 → 回頭修改 → 可再請一次。
+//
+// ★ 串接真實 AI：只要改寫 fetchAIFeedback()，把 payload 送到自家後端即可，
+//   其餘的次數控管、載入狀態、畫面呈現都不用動。
+//   回傳格式：{ good: [字串…], improve: [字串…], next: 字串 }
+async function fetchAIFeedback(payload){
+  // 正式環境範例：
+  // const r = await fetch('/api/ai-feedback', {
+  //   method: 'POST',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify(payload)          // { practice, round, answers }
+  // });
+  // return await r.json();
+  await new Promise(function(r){ setTimeout(r, 1100); });   // 原型：模擬思考時間
+  return mockFeedback(payload);
+}
+
+const AI_LIMIT = 2;
+const aiUsed = { p1: 0, p2: 0, p3: 0 };
+const aiSnapshot = { p1: '', p2: '', p3: '' };
+const AI_PRACTICE_NAME = { p1: '小練習（一）', p2: '小練習（二）', p3: '小練習（三）' };
+
+function aiAnswers(key){
+  if(key === 'p1'){
+    return {
+      題目: chosenRole ? ROLE_TEXT[chosenRole] : '',
+      取材: val('p1-topic'),
+      心境轉折: val('p1-turn')
+    };
+  }
+  if(key === 'p2'){
+    return {
+      題目: chosenRole ? ROLE_TEXT[chosenRole] : '',
+      第一段破題: val('p2-s1'),
+      第二段對比A: val('p2-s2'),
+      第三段對比B: val('p2-s3'),
+      第四段體悟: val('p2-s4')
+    };
+  }
+  return {
+    心情: val('p3-mood'),
+    動詞: val('p3-verbs'),
+    串起動作: val('p3-sentence')
+  };
+}
+
+function aiUpdateQuota(key){
+  const left = AI_LIMIT - aiUsed[key];
+  const quota = document.getElementById('aiQuota-' + key);
+  const btn = document.getElementById('aiBtn-' + key);
+  if(quota){
+    quota.textContent = left > 0 ? ('還可以請 AI 看 ' + left + ' 次') : ('AI 建議已經用完了（' + AI_LIMIT + '／' + AI_LIMIT + '）');
+    quota.classList.toggle('used-up', left <= 0);
+  }
+  if(btn){
+    btn.disabled = left <= 0;
+    const label = btn.querySelector('.ai-btn-label');
+    if(label) label.textContent = (aiUsed[key] === 0) ? '請 AI 給我建議' : '再請 AI 看一次';
+  }
+}
+
+function aiSetLoading(key, loading){
+  const btn = document.getElementById('aiBtn-' + key);
+  if(!btn) return;
+  const label = btn.querySelector('.ai-btn-label');
+  if(loading){
+    btn.disabled = true;
+    if(label) label.innerHTML = 'AI 正在看你的答案 <span class="ai-dots"><i></i><i></i><i></i></span>';
+  } else {
+    aiUpdateQuota(key);
+  }
+}
+
+function aiListHTML(items){
+  return '<ul>' + items.map(function(t){ return '<li>' + t + '</li>'; }).join('') + '</ul>';
+}
+
+function aiRenderFeedback(key, data, round){
+  const box = document.getElementById('aiFb-' + key);
+  if(!box) return;
+  let html = '<div class="ai-fb-head">' +
+    '<div class="ai-fb-title"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-sparkle"></use></svg> AI 給你的建議</div>' +
+    '<span class="ai-round">第 ' + round + ' 次／共 ' + AI_LIMIT + ' 次</span></div>';
+  if(data.good && data.good.length){
+    html += '<div class="ai-sec"><div class="ai-sec-t"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-check"></use></svg> 你做得不錯的地方</div>' + aiListHTML(data.good) + '</div>';
+  }
+  if(data.improve && data.improve.length){
+    html += '<div class="ai-sec"><div class="ai-sec-t"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-bulb"></use></svg> 可以再加強的地方</div>' + aiListHTML(data.improve) + '</div>';
+  }
+  if(data.next){
+    html += '<div class="ai-next"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-pencil"></use></svg><span>下一步：' + data.next + '</span></div>';
+  }
+  html += '<div class="ai-disclaimer">看完建議後，直接回到上面修改你的答案，改完記得按「儲存我的練習」。（此原型的回饋為示範內容，正式上線將由 AI 依你寫的內容即時生成。）</div>';
+  box.innerHTML = html;
+  box.hidden = false;
+  requestAnimationFrame(function(){ box.scrollIntoView({ block: 'nearest', behavior: 'auto' }); });
+}
+
+async function askAI(key){
+  const answers = aiAnswers(key);
+  const filled = Object.keys(answers).filter(function(k){ return answers[k]; });
+  const writable = Object.keys(answers).filter(function(k){ return k !== '題目'; });
+  const written = writable.filter(function(k){ return answers[k]; });
+
+  // 還沒寫就按：提醒一下，不算次數
+  if(written.length === 0){
+    playSound('click');
+    showToast('先寫一點內容，AI 才看得懂你的想法喔', 'pencil');
+    return;
+  }
+  // 和上次一模一樣：提醒先修改，不算次數
+  const fingerprint = JSON.stringify(answers);
+  if(aiUsed[key] > 0 && fingerprint === aiSnapshot[key]){
+    playSound('click');
+    showToast('內容和上次一樣，先照建議改一改再問我吧', 'bulb');
+    return;
+  }
+
+  playSound('click');
+  aiSetLoading(key, true);
+  const round = aiUsed[key] + 1;
+  let data;
+  try{
+    data = await fetchAIFeedback({ practice: key, name: AI_PRACTICE_NAME[key], round: round, answers: answers });
+  }catch(e){
+    aiSetLoading(key, false);
+    showToast('AI 現在有點忙，等一下再試一次', 'lock');
+    return;
+  }
+  aiUsed[key] = round;
+  aiSnapshot[key] = fingerprint;
+  aiSetLoading(key, false);
+  aiRenderFeedback(key, data, round);
+  playSound('success');
+}
+
+// ---- 原型用的示範回饋（正式版由後端 AI 取代）--------------------------------
+const AI_VERB_BANK = ['抿','咬','撇','握','搥','撕','發軟','踱步','聳起','緊繃','佇立','下垂','摳','按壓','壓',
+  '鎖定','竄動','顫抖','捏','抹','撞','拍打','遞','複述','起伏','皺','閉','揉','踢','咬牙','發抖','低頭','握緊'];
+
+function mockFeedback(payload){
+  const a = payload.answers;
+  const round = payload.round;
+  const good = [], improve = [];
+  let next = '';
+
+  if(payload.practice === 'p1'){
+    const topic = a['取材'] || '', turn = a['心境轉折'] || '';
+    if(a['題目']) good.push('題目已經選好了：<b>' + a['題目'] + '</b>，方向很清楚。');
+    else improve.push('還沒選題目。先決定要寫「我是主角」還是「我當配角」，整篇的角度才會固定下來。');
+
+    if(topic.length >= 20) good.push('事件寫得夠具體，讀的人可以想像那個場景。');
+    else if(topic) improve.push('事件再具體一點：什麼時候、在哪裡、跟誰一起、你實際做了什麼。把「一次比賽」變成「上學期班際籃球賽，我坐在板凳上遞水」。');
+
+    if(/從|到|原本|本來|後來|一開始|以前|竟然|才發現/.test(turn)) good.push('心境轉折有寫出前後的變化，這正是這個題目的關鍵。');
+    else if(turn) improve.push('心境轉折可以用「從……到……」的說法，先寫原本的心情，再寫後來變成什麼。例如「從覺得自己被丟在一旁，到發現我也撐住了整場比賽」。');
+    else improve.push('心境轉折還沒寫。這一題的高分關鍵就是情感的轉變，別跳過。');
+
+    next = round === 1
+      ? '挑出這件事裡「畫面最強的那一秒」，先用一句話寫下你當時的動作，之後第三個小練習就用得上。'
+      : '把取材和心境轉折各唸一次，確認兩者真的連得起來：事件要能解釋你的心情為什麼改變。';
+  }
+
+  if(payload.practice === 'p2'){
+    const s1 = a['第一段破題'] || '', s2 = a['第二段對比A'] || '', s3 = a['第三段對比B'] || '', s4 = a['第四段體悟'] || '';
+    const filled = [s1, s2, s3, s4].filter(Boolean).length;
+    if(filled === 4) good.push('四段大綱都填好了，文章骨架已經站得起來。');
+    else improve.push('目前填了 ' + filled + ' 段，還有 ' + (4 - filled) + ' 段沒寫。四段都有，對比結構才完整。');
+
+    if(s2 && s3){
+      if(s2.replace(/\s/g, '') === s3.replace(/\s/g, '')) improve.push('對比 A 和對比 B 寫得幾乎一樣。兩段要是「相反的兩面」，例如一邊是站在鎂光燈下的壓力，一邊是退到幕後的落寞。');
+      else good.push('對比 A 和 B 有寫出不同的兩面，這是這個結構最重要的部分。');
+    }
+    if(s1 && s1.length < 12) improve.push('破題可以再有力一點：用一句短短的比喻或反問開場，例如「有些光，要站在陰影裡才看得見」。');
+    if(s4){
+      if(/明白|發現|原來|才知道|體會|學會|懂得|不再/.test(s4)) good.push('第四段有寫出體悟，不只是把事情再說一次。');
+      else improve.push('第四段要收在「我懂了什麼」，而不是重述經過。試著用「原來……」「我才明白……」開頭。');
+    }
+    next = round === 1
+      ? '先把第二段擴寫成五到六句，記得加入當時的動作和身體感覺，不要只寫心情形容詞。'
+      : '把四段連起來唸一次，檢查第四段的體悟是不是同時回應了 A 和 B 兩個經驗。';
+  }
+
+  if(payload.practice === 'p3'){
+    const mood = a['心情'] || '', verbs = a['動詞'] || '', sent = a['串起動作'] || '';
+    const hit = AI_VERB_BANK.filter(function(v){ return (verbs + sent).indexOf(v) !== -1; });
+    if(mood) good.push('心情定調為「' + mood + '」，接下來的動作只要都往這個方向靠就對了。');
+    else improve.push('先寫下一個明確的心情詞（緊張、落寞、激昂……），動作才有方向。');
+
+    if(hit.length >= 4) good.push('用了不少具體動詞（' + hit.slice(0, 4).join('、') + '……），畫面感很夠。');
+    else if(hit.length > 0) improve.push('動詞還可以再多一點。臉部、手、腳、身體四個部位各找一個，像是抿、摳、踱步、聳起。');
+    else improve.push('目前比較像在說明心情，還沒看到動作。先想「這個心情會讓身體做出什麼動作」，再寫下來。');
+
+    if(sent){
+      if(/心跳|心|酸|鼻|胸|呼吸|翻騰|發燙|喉|胃/.test(sent)) good.push('句子最後有帶到內在反應，符合「由外而內」的順序。');
+      else improve.push('句子結尾可以收在內在反應，例如心跳、鼻尖發酸、胸口發悶，讓讀的人感覺得到。');
+      if(sent.length < 30) improve.push('句子再長一點，把動作排成順序：大動作 →小動作 →內在反應，中間用「同時」「連帶著」連起來。');
+    } else {
+      improve.push('第三格還沒寫。把上面找到的動詞串成一段文字，這一段之後可以直接放進文章裡。');
+    }
+    next = round === 1
+      ? '把你寫的句子小聲唸一次，唸的時候動作做得出來的就留下，做不出來的就換一個動詞。'
+      : '選一個動詞換成更精準的說法（例如「拿」換成「捏」或「摳」），一個字就能讓畫面差很多。';
+  }
+
+  if(good.length === 0) good.push('你已經開始動筆了，這是最難的一步。');
+  return { good: good, improve: improve, next: next };
+}
+
 // ---- 影片嵌入 ------------------------------------------------------------
 // 每個影片卡上的 data-video 欄位：
 //   留空                     → 維持現在的示意佔位框（交付原型時用這個）
@@ -1464,6 +1749,7 @@ function mountVideos(){
   });
 }
 mountVideos();
+['p1','p2','p3'].forEach(aiUpdateQuota);
 
 
 // ---- 離開影片所在的畫面時，停止播放 ----------------------------------------

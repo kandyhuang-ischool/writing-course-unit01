@@ -308,9 +308,10 @@ table.k-table tr:last-child td{ border-bottom:none; }
 
 textarea.answer-box{
   width:100%; min-height: 74px;
+  overflow:hidden;
   border: 2px solid var(--line); border-radius: var(--radius-sm);
   padding: 12px 14px; font-family:inherit; font-size:16px; color:var(--ink);
-  resize: vertical; margin-bottom: 12px;
+  resize: none; margin-bottom: 12px;
 }
 textarea.answer-box:focus{ outline:none; border-color: var(--teal); }
 label.field-label{ display:block; font-weight:700; font-size:14.5px; color:var(--ink-soft); margin: 10px 0 6px; }
@@ -341,9 +342,10 @@ label.field-label{ display:block; font-weight:700; font-size:14.5px; color:var(-
   padding: 20px 22px; box-shadow: var(--shadow); margin-top:16px;
 }
 .writing-card textarea{
-  width:100%; min-height: 260px; border:2px solid var(--line);
+  width:100%; min-height: 260px;
+  overflow:hidden; border:2px solid var(--line);
   border-radius: var(--radius-sm); padding:16px; font-size:16px;
-  font-family: inherit; color:var(--ink); resize:vertical;
+  font-family: inherit; color:var(--ink); resize:none;
 }
 .writing-card textarea:focus{ outline:none; border-color: var(--coral); }
 .wc-row{ display:flex; justify-content:space-between; align-items:center; margin-top:10px; flex-wrap:wrap; gap:10px;}
@@ -483,28 +485,19 @@ footer{ text-align:center; color:var(--ink-soft); font-size:13.5px; margin-top:4
   .practice-pane.is-fullscreen .writing-card textarea{ min-height: 62vh; }
 }
 
+/* 寬螢幕：左右分割，但兩欄都跟著整頁捲動，不再各自長出捲軸。
+   全站只剩一條頁面捲軸；影片卡固定在左欄上方，捲動講義時影片仍看得見
+   （與「範文賞析」那一步的行為一致）。 */
 @media (min-width: 680px){
   .split-view{
     flex-direction: row;
-    height: min(80vh, 820px);
+    align-items: flex-start;
   }
-  .ref-pane, .practice-pane{
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: var(--line) transparent;
-  }
-  .ref-pane::-webkit-scrollbar, .practice-pane::-webkit-scrollbar{ width: 8px; }
-  .ref-pane::-webkit-scrollbar-track, .practice-pane::-webkit-scrollbar-track{ background: transparent; }
-  .ref-pane::-webkit-scrollbar-thumb, .practice-pane::-webkit-scrollbar-thumb{ background: var(--line); border-radius: 999px; }
-  .ref-pane::-webkit-scrollbar-thumb:hover, .practice-pane::-webkit-scrollbar-thumb:hover{ background: var(--ink-soft); }
-  .ref-pane{ flex: 0 0 54%; padding-right:16px; }
-  .practice-pane{ flex: 1 1 46%; padding-right:16px; display:flex; flex-direction:column; }
-  .pane-label-row{ position:sticky; top:0; z-index:2; }
-  .practice-pane .practice-card,
-  .practice-pane .writing-card{ flex: 1 0 auto; display:flex; flex-direction:column; }
-  .practice-pane .practice-card .action-row{ margin-top:auto; }
-  .practice-pane .writing-card textarea{ flex:1 1 auto; }
+  .ref-pane{ flex: 0 0 54%; padding-right:16px; min-width:0; }
+  .practice-pane{ flex: 1 1 46%; min-width:0; }
+  /* 練習欄比視窗矮時就固定住：捲動左邊的講義時，右邊的練習一直在畫面上。
+     太高就恢復一般捲動，避免卡片底部被卡在畫面外（由 updateStickyPractice() 判斷）。 */
+  .practice-pane.is-sticky{ position: sticky; top: 76px; }
 }
 
 /* ---------- 裝置畫面過窄提示（本介面適合平板橫向／電腦瀏覽器） ---------- */
@@ -540,6 +533,29 @@ footer{ text-align:center; color:var(--ink-soft); font-size:13.5px; margin-top:4
 }
 .device-warning button:hover{ opacity:0.88; }
 .device-warning.dismissed{ display:none !important; }
+
+/* ---------- 題目卡收合（收起來之後，頁面少掉約 700px） ---------- */
+.hero-toggle{
+  display:inline-flex; align-items:center; gap:8px;
+  margin-top:14px; min-height:44px; padding:8px 18px;
+  background:#fff; border:2px solid var(--line); border-radius:999px;
+  font-family:inherit; font-size:13.5px; font-weight:700; color:var(--ink-soft);
+  cursor:pointer; transition: transform .12s ease, color .15s ease, border-color .15s ease;
+}
+.hero-toggle:hover{ transform: translateY(-2px); border-color:var(--coral); color:var(--coral-dark); }
+.hero-toggle:active{ transform: scale(0.96); }
+.hero-caret{ transition: transform .2s ease; transform: rotate(90deg); }
+.hero.collapsed .hero-caret{ transform: rotate(0deg); }
+.hero.collapsed .pill-row,
+.hero.collapsed .prompt-card .scenario,
+.hero.collapsed .scenario-grid,
+.hero.collapsed .rules,
+.hero.collapsed .hint-arrow{ display:none; }
+.hero.collapsed{ padding: 20px 16px 18px; }
+.hero.collapsed h1{ font-size: clamp(19px,2.6vw,24px); }
+.hero.collapsed .unit-title{ margin-bottom:10px; }
+.hero.collapsed .prompt-card{ padding:14px 18px; }
+.hero.collapsed .prompt-card .ask{ margin-top:0; }
 
 /* ---------- AI 回饋 ---------- */
 .action-row{
@@ -686,6 +702,16 @@ footer{ text-align:center; color:var(--ink-soft); font-size:13.5px; margin-top:4
 .review-a.empty{ color:#A9B6C0; }
 .review-tip{ font-size:13.5px; color:var(--ink-soft); margin-bottom:12px; }
 
+/* ---------- 捲軸：平時隱形，滑鼠在頁面上時才淡淡浮現 ---------- */
+html{ scrollbar-width: thin; scrollbar-color: transparent transparent; }
+html:hover{ scrollbar-color: rgba(44,62,80,0.22) transparent; }
+::-webkit-scrollbar{ width: 10px; height: 10px; }
+::-webkit-scrollbar-track{ background: transparent; }
+::-webkit-scrollbar-thumb{ background: transparent; border-radius: 999px; border: 3px solid transparent; background-clip: content-box; }
+body:hover ::-webkit-scrollbar-thumb,
+body:hover::-webkit-scrollbar-thumb{ background: rgba(44,62,80,0.22); background-clip: content-box; }
+::-webkit-scrollbar-thumb:hover{ background: rgba(44,62,80,0.42) !important; background-clip: content-box; }
+
 .icon{
   width:1em; height:1em;
   display:inline-block;
@@ -804,6 +830,7 @@ footer{ text-align:center; color:var(--ink-soft); font-size:13.5px; margin-top:4
         <span class="rule-chip">不可洩漏私人身分</span>
         <span class="rule-chip">不可使用詩歌體</span>
       </div>
+      <button class="hero-toggle" type="button" onclick="toggleHero()"><svg class="icon hero-caret" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-chevron-right"></use></svg> <span id="heroToggleLabel">收合題目，空間留給課程</span></button>
     </div>
     <div class="hint-arrow"><span class="bounce"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></span> 點選下方卡片，或直接往下滑，開始今天的寫作課吧！</div>
   </div>
@@ -1232,6 +1259,12 @@ function showStep(id){
   });
   document.body.style.overflow = '';
 
+  // 第一次切換步驟時，把題目卡收起來，畫面留給課程內容
+  autoCollapseHero();
+
+  // 切換後重新量一次文字框高度（剛剛隱藏的區塊量不到正確高度）
+  requestAnimationFrame(function(){ growAllTextareas(); updateStickyPractice(); });
+
   // 離開某個步驟時，停止該步驟的影片，避免聲音在背景繼續播
   updateVideoPlayback(id);
 
@@ -1478,6 +1511,61 @@ function renderReview(){
 
 
 
+
+
+// ---- 練習欄要不要固定在畫面上 ----------------------------------------------
+// 只有在「練習欄比可視高度矮」時才固定，否則卡片底部會被卡在畫面外。
+function updateStickyPractice(){
+  const avail = window.innerHeight - (navHeight() + warningOffset() + 32);
+  const wide = window.innerWidth >= 680;
+  document.querySelectorAll('.practice-pane').forEach(function(pane){
+    if(pane.classList.contains('is-fullscreen')) return;
+    const fits = pane.scrollHeight <= avail;
+    pane.classList.toggle('is-sticky', wide && fits);
+  });
+}
+window.addEventListener('resize', updateStickyPractice);
+window.addEventListener('load', updateStickyPractice);
+
+// ---- 題目卡收合：進入任何一個步驟後自動收起來，把畫面留給課程內容 ----
+let heroAutoCollapsed = false;
+function toggleHero(){
+  playSound('click');
+  const hero = document.querySelector('.hero');
+  const collapsed = hero.classList.toggle('collapsed');
+  const label = document.getElementById('heroToggleLabel');
+  if(label) label.textContent = collapsed ? '展開完整題目與情境圖' : '收合題目，空間留給課程';
+  heroAutoCollapsed = true;          // 使用者自己動過之後，就不再自動收合
+}
+function autoCollapseHero(){
+  if(heroAutoCollapsed) return;
+  heroAutoCollapsed = true;
+  const hero = document.querySelector('.hero');
+  if(hero && !hero.classList.contains('collapsed')){
+    hero.classList.add('collapsed');
+    const label = document.getElementById('heroToggleLabel');
+    if(label) label.textContent = '展開完整題目與情境圖';
+  }
+}
+
+// ---- 作答框自動長高：輸入變多時文字框自己變高，不要再出現框內捲軸 ----
+function autoGrow(el){
+  if(!el || el.tagName !== 'TEXTAREA') return;
+  el.style.height = 'auto';
+  // box-sizing 是 border-box，高度要把上下框線算進去，否則會殘留幾 px 的框內捲動
+  const border = el.offsetHeight - el.clientHeight;
+  el.style.height = (el.scrollHeight + border) + 'px';
+}
+function growAllTextareas(){
+  document.querySelectorAll('textarea').forEach(autoGrow);
+  updateStickyPractice();
+}
+document.addEventListener('input', function(e){
+  if(e.target && e.target.tagName === 'TEXTAREA') autoGrow(e.target);
+});
+window.addEventListener('resize', growAllTextareas);
+window.addEventListener('load', growAllTextareas);
+
 // ---- 小練習的 AI 回饋 --------------------------------------------------------
 // 每個小練習最多兩次。流程：學生作答 → 請 AI 看 → 讀建議 → 回頭修改 → 可再請一次。
 //
@@ -1574,6 +1662,7 @@ function aiRenderFeedback(key, data, round){
   html += '<div class="ai-disclaimer">看完建議後，直接回到上面修改你的答案，改完記得按「儲存我的練習」。（此原型的回饋為示範內容，正式上線將由 AI 依你寫的內容即時生成。）</div>';
   box.innerHTML = html;
   box.hidden = false;
+  updateStickyPractice();
   requestAnimationFrame(function(){ box.scrollIntoView({ block: 'nearest', behavior: 'auto' }); });
 }
 
